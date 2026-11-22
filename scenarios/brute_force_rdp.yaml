@@ -1,0 +1,37 @@
+id: brute_force_01
+title: "RDP Brute Force Attempt - WIN-LAB"
+
+# Real data from your own Wazuh lab
+wazuh_rule_id: "60122"
+wazuh_rule_description: "Logon Failure - Unknown user or bad password"
+event_id: "4625"
+agent_name: "win-lab"
+agent_ip: "192.168.56.101"
+source_ip: "192.168.56.1"
+target_username: "testuser"
+logon_type: "3 (network)"
+severity_level: 5
+
+# Correct classification (overriding Wazuh's generic auto-tag, see note below)
+mitre_technique: "T1110"
+mitre_tactic: "Credential Access"
+
+ground_truth: real_incident
+
+correct_actions:
+  - investigate_source_ip
+  - check_if_multiple_failures
+  - isolate_host
+  - reset_credentials
+  - notify_client
+  - escalate_senior
+
+client_persona: panicked_nontechnical
+client_context: >
+  You own the WIN-LAB machine. You are not technical. You are worried
+  someone is trying to break into your computer remotely.
+
+senior_context: >
+  You expect the analyst to tell you: the source IP, the targeted
+  username, how many failed attempts, and the recommended containment
+  step, before you approve any action.
